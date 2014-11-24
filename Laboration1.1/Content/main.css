@@ -1,0 +1,62 @@
+﻿body {
+    margin:0;
+    color:green;
+}
+
+h1 {
+    font-size:4em;
+}
+#page {
+            width:80%;
+            margin:0 auto;
+            height:100%;
+            height: auto !important;
+    
+}
+
+.right {     background: #c0ffc0;}
+.high {      background: #ffc0c0;}
+.low {       background: #c0c0ff}
+
+input {    width:80px;  
+            
+            margin-right:20px;
+}
+input[type=submit] { 
+              width:180px;
+              float:right;
+              margin-top:-30px;
+              background:green;
+              color:#FFF;
+              border:none;
+              padding:5px;
+              font-size:1.2em;
+}
+#inputDiv {
+            width:600px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+ th {
+            background:#000;
+            color:#FFF;
+            width:30px;
+            padding:5px;
+ }
+ td {   
+            width:30px;
+            padding:5px;
+            color:#000;
+ }
+ table {
+    border-collapse: collapse;
+}
+ table, th, td {
+   border: 1px solid black;
+}
+label {
+        font-size:1.5em;    
+}

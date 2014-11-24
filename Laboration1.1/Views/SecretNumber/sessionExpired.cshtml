@@ -1,0 +1,25 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Gissa det hemliga talet</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div id="page">
+        <div>
+            <h1>Spelomgången kunde inte fullföljas</h1>
+            <p>Du väntade för länge med att gissa varför spelomgången inte kunde fullföljas.</p>
+            @Html.ActionLink("Börja om",
+                 "Index", "SecretNumber"
+        )
+        </div>
+        </div>
+</body>
+</html>

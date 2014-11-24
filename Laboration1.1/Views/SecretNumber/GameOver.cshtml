@@ -1,0 +1,26 @@
+﻿@model Laboration1._1.Models.SecretNumber
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GameOver</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div id="page">
+        <div>
+            <h1>Inga fler gissningar!</h1>
+            <h2>Spelet är slut. Du har använt alla din gissningar. Det hemliga talet var: @Model.Number</h2>
+            @Html.ActionLink("Slumpa nytt hemligt nummer",
+               "Index", "SecretNumber"
+               );
+        </div>
+        </div>
+</body>
+</html>
