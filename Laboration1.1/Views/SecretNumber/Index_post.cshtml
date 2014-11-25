@@ -1,78 +1,98 @@
 ﻿@model Laboration1._1.Models.SecretNumber
+@using Laboration1._1.Models
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Gissa det hemliga talet</title>
-    @Styles.Render("~/Content/css")
-</head>
-<body>
-    <div id="page">
-        @{
-        @Html.Partial("~/Views/Shared/SecretNumber.cshtml")
-        int i = 0;
-        <h2> Antal gissningar du gjort: @Model.Count av 7</h2>
-
-         if (Model.LastGuessedNumber.Outcome == Laboration1._1.Models.SecretNumber.Outcome.Low)
-        {
-            <h2>@Model.LastGuessedNumber.Number är för lågt.</h2>
-        }   
-       
-         if (Model.LastGuessedNumber.Outcome == Laboration1._1.Models.SecretNumber.Outcome.High)
-        {
-            <h2>@Model.LastGuessedNumber.Number är för högt.</h2>
-        }       
-
-        if (Model.LastGuessedNumber.Outcome == Laboration1._1.Models.SecretNumber.Outcome.Right)
-        {
-            <h2>Grattis du gissade rätt! Du klarade det på @Model.Count försök.</h2>
-        }
         
-        if (Model.LastGuessedNumber.Outcome == Laboration1._1.Models.SecretNumber.Outcome.OldGuess)
-        {
-            <h2>Du har redan gissat på numret @Model.LastGuessedNumber.Number </h2>
-        }
+       @{ int i = 0;
+          bool showPartialView = true;
+          
+            if (Model.LastGuessedNumber.Outcome == SecretNumber.Outcome.Right)
+            {
+                  showPartialView = false;
+                 <h2>Grattis du gissade rätt! Du klarade det på @Model.Count försök.</h2>
+            
+                  @Html.ActionLink("Slumpa nytt hemligt nummer",
+                     "Index", "SecretNumber"
+                     );
+            }
 
-        <table class="table">
-            <tr>
-                @foreach (var item in Model.GuessedNumbers)
-                {
-                    i++;
-                    <th>@i</th>
-                }
-            </tr>
-            <tr>
-                @foreach (var item in Model.GuessedNumbers)
-                {
-                    
-                    if (item.Outcome == Laboration1._1.Models.SecretNumber.Outcome.Right)
-                    {
-                        <td class="right">Rätt gissat!</td>
-                    }
-                    if (item.Outcome == Laboration1._1.Models.SecretNumber.Outcome.Low)
-                    {
-                        <td class="low">
-                            &#8593;<br />
-                            @item.Number
-                        </td>
-                    }
-                    if (item.Outcome == Laboration1._1.Models.SecretNumber.Outcome.High)
-                    {
-                        <td class="high">
-                            @item.Number <br />
-                             &#8595;
-                        </td>
-                    }
-                }
-            </tr>
-        </table>
+           if (Model.LastGuessedNumber.Outcome == SecretNumber.Outcome.NoMoreGuesses || Model.Count >= 7) 
+  
+           {
+           <div>
+           @{  showPartialView = false;
+           }
+            <h1>Inga fler gissningar!</h1>
+            <h2>Spelet är slut. Du har använt alla din gissningar. Det hemliga talet var: @Model.Number</h2>
+            
+            @Html.ActionLink("Slumpa nytt hemligt nummer",
+               "Index", "SecretNumber"
+               )
+            
+            </div>
         }
-      
-    </div>
-</body>
-</html>
+           if (showPartialView) { 
+          @Html.Partial("~/Views/Shared/SecretNumber.cshtml")
+           }
+
+        if (Model.Count > 0)
+          {
+               if (Model.Count < 8) { 
+                 <h2> Antal gissningar du gjort: @Model.Count av 7</h2>
+       }
+                  
+             if (Model.LastGuessedNumber.Outcome == SecretNumber.Outcome.Low)
+            {
+                <h2>@Model.LastGuessedNumber.Number är för lågt.</h2>
+            }   
+       
+             if (Model.LastGuessedNumber.Outcome == SecretNumber.Outcome.High)
+            {
+                <h2>@Model.LastGuessedNumber.Number är för högt.</h2>
+            }       
+        
+            if (Model.LastGuessedNumber.Outcome == SecretNumber.Outcome.OldGuess)
+            {
+                <h2>Du har redan gissat på numret @Model.LastGuessedNumber.Number </h2>
+            }
+  
+
+            <table class="table">
+                <tr>
+                    @foreach (var item in Model.GuessedNumbers)
+                    {   
+                        i++;
+                        if (i < 8) { 
+                        <th>@i</th>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @foreach (var item in Model.GuessedNumbers)
+                    {
+                    
+                        if (item.Outcome == Laboration1._1.Models.SecretNumber.Outcome.Right)
+                        {
+                            <td class="right">@item.Number</td>
+                        }
+                        if (item.Outcome == Laboration1._1.Models.SecretNumber.Outcome.Low)
+                        {
+                            <td class="low">
+                                &#8593;<br />
+                                @item.Number
+                            </td>
+                        }
+                        if (item.Outcome == Laboration1._1.Models.SecretNumber.Outcome.High)
+                        {
+                            <td class="high">
+                                @item.Number <br />
+                                 &#8595;
+                            </td>
+                        }
+                    }
+                </tr>
+            </table>
+        }
+      }
+

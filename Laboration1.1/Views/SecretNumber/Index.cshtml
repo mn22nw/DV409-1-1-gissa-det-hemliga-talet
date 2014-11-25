@@ -1,20 +1,9 @@
 ﻿@model Laboration1._1.Models.SecretNumber
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Gissa det hemliga talet</title>
-    @Styles.Render("~/Content/css")
-</head>
-<body>
-    <div id="page">
         @Html.Partial("~/Views/Shared/SecretNumber.cshtml")
-    </div>
-</body>
-</html>
+
+

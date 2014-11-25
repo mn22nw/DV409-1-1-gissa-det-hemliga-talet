@@ -18,7 +18,7 @@ namespace Laboration1._1.Models
 
         private GuessedNumber _lastGuessedNumber; 
 
-        public static int MaxNumberOfGuesses = 6;  
+        public static int MaxNumberOfGuesses = 7;  
         #endregion
 
         public struct GuessedNumber
@@ -40,7 +40,8 @@ namespace Laboration1._1.Models
 
         [DisplayName("Gissa ett tal mellan 1 och 100:")]    
         [Required(ErrorMessage = "Nummer måste anges.")]
-        [Range(1, 100)]
+        [StringLength(3)]
+        [Range(1, 100, ErrorMessage = "Nummer måste anges.")]
         public int? Number 
         { 
             get
@@ -54,7 +55,6 @@ namespace Laboration1._1.Models
                  
             }
         }
-        
 
         public bool CanMakeGuess
         {
@@ -122,7 +122,7 @@ namespace Laboration1._1.Models
 
             if (guess < 1 || guess > 100)
             {
-                throw new ArgumentOutOfRangeException("number", "Du måste ange ett värde mellan 1 och 100");
+                throw new ArgumentOutOfRangeException(String.Empty, "Du måste ange ett värde mellan 1 och 100");
             }
 
             if (guess < _number)
@@ -140,7 +140,7 @@ namespace Laboration1._1.Models
                 newGuess.Outcome = Outcome.Right;
             }
 
-            if (CanMakeGuess != true)
+            if (!CanMakeGuess)
             {
                 newGuess.Outcome = Outcome.NoMoreGuesses;
             }

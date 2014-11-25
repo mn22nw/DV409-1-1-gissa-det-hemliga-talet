@@ -12,8 +12,7 @@ namespace Laboration1._1.Controllers
 
         public ActionResult Index()
         {   
-            Session.Abandon();
-            
+            Session["StartGame"] = "StartGame";
             return View();
         }
 
@@ -21,7 +20,7 @@ namespace Laboration1._1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(int number)
         {
-            Session["StartGame"] = "StartGame";
+            
             if (Session["StartGame"] == null)
             {
                 return View("sessionExpired");
@@ -42,16 +41,16 @@ namespace Laboration1._1.Controllers
                 try
                 {
                     model.MakeGuess(number);
-                    if (model.LastGuessedNumber.Outcome == Laboration1._1.Models.SecretNumber.Outcome.NoMoreGuesses)
+                    
+                    if (model.LastGuessedNumber.Outcome == SecretNumber.Outcome.Right || model.LastGuessedNumber.Outcome == SecretNumber.Outcome.NoMoreGuesses)
                     {
-                        return View("GameOver", model);
-                    }
-                        
+                        Session.Abandon();
+                    } 
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    ModelState.AddModelError("Number", e.Message);
-                    return View();
+                    ModelState.AddModelError(String.Empty, e.Message);
+                    return View("Index_post", model);
                 }
                 Session["SecretNumber"] = model;
 
