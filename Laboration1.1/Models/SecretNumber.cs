@@ -39,9 +39,8 @@ namespace Laboration1._1.Models
         #region Properties
 
         [DisplayName("Gissa ett tal mellan 1 och 100:")]    
+        [Range(1, 100, ErrorMessage = "Ett nummer mellan 1-100 måste anges.")]
         [Required(ErrorMessage = "Nummer måste anges.")]
-        [StringLength(3)]
-        [Range(1, 100, ErrorMessage = "Nummer måste anges.")]
         public int? Number 
         { 
             get

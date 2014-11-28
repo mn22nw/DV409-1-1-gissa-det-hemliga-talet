@@ -9,51 +9,45 @@ namespace Laboration1._1.Controllers
 {
     public class SecretNumberController : Controller
     {
+        private SecretNumber SecretNumber
+        {    
+            get { return Session["SecretNumber"] as SecretNumber ?? (SecretNumber)(Session["SecretNumber"] = new SecretNumber()); }
+        }
 
         public ActionResult Index()
-        {   
-            Session["StartGame"] = "StartGame";
-            return View();
+        {
+            if (Session["SecretNumber"] != null)
+            {
+                Session.Clear();
+            }
+            return View(SecretNumber);
         }
 
         [HttpPost, ActionName("Index")]
         [ValidateAntiForgeryToken]
         public ActionResult Index(int number)
         {
-            
-            if (Session["StartGame"] == null)
+
+            if (Session["SecretNumber"] == null)
             {
                 return View("sessionExpired");
             }
 
             if (ModelState.IsValid)
             {
-                SecretNumber model;
-                if ((SecretNumber)Session["SecretNumber"] == null)
-                {
-                    model = new SecretNumber();
-                }
-                else
-                {
-                    model = (SecretNumber)Session["SecretNumber"];
-                }
+                
+                var model = (SecretNumber)Session["SecretNumber"];
 
                 try
                 {
-                    model.MakeGuess(number);
-                    
-                    if (model.LastGuessedNumber.Outcome == SecretNumber.Outcome.Right || model.LastGuessedNumber.Outcome == SecretNumber.Outcome.NoMoreGuesses)
-                    {
-                        Session.Abandon();
-                    } 
+                    model.MakeGuess(number);        
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
                     ModelState.AddModelError(String.Empty, e.Message);
                     return View("Index_post", model);
                 }
-                Session["SecretNumber"] = model;
-
+                
                 return View("Index_post", model);
             }
             return View();
